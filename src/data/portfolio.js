@@ -9,6 +9,15 @@
 // Leave `image: null` to show an auto-generated placeholder instead.
 // ---------------------------------------------------------------------------
 
+// Sample project banners (generated placeholders, not real product
+// screenshots) — swap these for actual screenshots whenever you have them,
+// following the same 3-step pattern described above.
+import muvrPaymentsImg from '../assets/projects/muvr-payments.svg'
+import ficoImg from '../assets/projects/fico.svg'
+import akreditasikuImg from '../assets/projects/akreditasiku.svg'
+import digitalBootcampImg from '../assets/projects/digital-bootcamp.svg'
+import oripayImg from '../assets/projects/oripay.svg'
+
 export const profile = {
   name: 'Cahya Ramadhan',
   title: 'Backend Engineer',
@@ -49,8 +58,12 @@ export const skills = [
 ]
 
 // Ordered most-recent first — this is what recruiters scan hardest.
+// `id` is a stable key used to link a project card back to the job it came
+// from (see `projects[].experienceId` below) — keep it stable even if you
+// reword `company`/`role`.
 export const experience = [
   {
+    id: 'muvr',
     company: 'Muvr Technologies, Inc.',
     role: 'Backend Engineer',
     period: 'September 2025 – Present',
@@ -65,7 +78,9 @@ export const experience = [
     tech: ['Node.js', 'Go', 'MySQL', 'Redis', 'Stripe', 'Express.js', 'Auth0'],
   },
   {
+    id: 'edot-fico',
     company: 'PT Harmoni Mitra Jayandra',
+    tabLabel: 'PT Harmoni Mitra Jayandra (eDOT)',
     roleDetail: 'onsite placement at PT Elektronik Distribusi Otomatisasi Terkemuka (eDOT)',
     role: 'Backend Engineer',
     period: 'November 2023 – September 2025',
@@ -80,6 +95,7 @@ export const experience = [
     tech: ['Go', 'MongoDB', 'Redis', 'RabbitMQ', 'GitLab'],
   },
   {
+    id: 'hmj-2021',
     company: 'PT Harmoni Mitra Jayandra',
     role: 'Backend Engineer',
     period: 'September 2021 – November 2023',
@@ -94,6 +110,7 @@ export const experience = [
     tech: ['Go', 'Go-kit', 'PostgreSQL', 'Docker', 'Node.js'],
   },
   {
+    id: 'kazee',
     company: 'PT Kazee Digital Indonesia',
     role: 'Backend Engineer Intern',
     period: 'August 2020 – December 2020',
@@ -111,55 +128,95 @@ export const experience = [
 
 // Named projects pulled out of the work above so recruiters can see concrete
 // deliverables at a glance. Add new ones by copying an entry below.
+//
+// - `slug` powers the project's detail-page URL (/projects/<slug>) — keep it
+//   short, unique, and URL-safe.
+// - `experienceId` must match an `id` in the `experience` array above — it's
+//   how the project card's company badge links back to the right job.
+// - `details` is the longer write-up shown on the project's detail page
+//   (array of paragraphs). The card on the homepage only shows `description`.
 export const projects = [
   {
+    slug: 'muvr-payments',
     title: 'Muvr Payments — Referral & Promo Engine',
     company: 'Muvr Technologies, Inc.',
+    experienceId: 'muvr',
     period: '2025',
     description:
       'Payment flows supporting referral and promo codes for an on-demand logistics platform, built on Stripe Payment Intents and integrated into an Express.js service layer for secure, flexible transactions.',
-    tech: ['Node.js', 'Express.js', 'Stripe', 'MySQL', 'Redis'],
-    image: null,
+    details: [
+      'Muvr connects customers with movers, haulers, and couriers for on-demand moving, delivery, and junk removal. Growth was pushing the team to reward repeat customers and word-of-mouth referrals without bolting on a fragile discount system.',
+      'I built the referral and promo code flows on top of Stripe Payment Intents, wiring the calculation logic and code redemption rules into the existing Express.js service layer so pricing, discounts, and payment capture stay consistent across the booking flow.',
+      'Alongside payments, I implemented role-based access control with Auth0 for the admin side, so internal teams can manage users and permissions without engineering involvement for every access change.',
+    ],
+    tech: ['Node.js', 'Express.js', 'Stripe', 'MySQL', 'Redis', 'Auth0'],
+    image: muvrPaymentsImg,
     link: null,
   },
   {
+    slug: 'fico-finance-core',
     title: 'FICO — Finance & Accounting Core',
     company: 'eDOT (Nabati Group)',
+    experienceId: 'edot-fico',
     period: '2023 – 2025',
     description:
       'Backend services generating journal entries tied to core financial transactions. Led the team through sprints and shipped a Redis + singleflight caching layer that cut invoice pricing latency from 500ms to 250ms under 50 concurrent users.',
+    details: [
+      'FICO is the Finance and Accounting core behind eDOT, a Nabati Group subsidiary that runs integrated digital solutions across sales, distribution, logistics, marketing, and enterprise systems for its business customers. Every sale, invoice, and adjustment upstream eventually has to land as a correct journal entry.',
+      'I built the CRUD and calculation APIs that generate journal items tied to core financial transactions, using Go, MongoDB, Redis, and RabbitMQ — with unit tests covering the calculation logic, since a wrong journal entry is a finance problem, not just a bug.',
+      'The invoice final-price calculation endpoint was a bottleneck under concurrent load. I optimized it with Go singleflight (to collapse duplicate in-flight calculations) plus Redis Index/Query caching, cutting response time from 500ms to 250ms for 50 concurrent users.',
+      'For about three months I also led the FICO team through its sprints — breaking down tasks, tracking progress, and reviewing merge requests in GitLab — through to a successful release and deployment.',
+    ],
     tech: ['Go', 'MongoDB', 'Redis', 'RabbitMQ'],
-    image: null,
+    image: ficoImg,
     link: null,
   },
   {
+    slug: 'akreditasiku',
     title: 'Akreditasiku — Accreditation Management',
     company: 'PT Harmoni Mitra Jayandra',
+    experienceId: 'hmj-2021',
     period: '2021 – 2023',
     description:
       'RESTful backend enabling multiple campuses to simulate and manage accreditation scores efficiently.',
+    details: [
+      'Akreditasiku helps Indonesian higher-education campuses manage and simulate their institutional accreditation scores — a process that otherwise means manually tracking dozens of scoring criteria across spreadsheets per campus.',
+      'I built the backend services and RESTful APIs using Go, Go-kit, and PostgreSQL, structuring the data model so multiple campuses could simulate different scoring scenarios and manage their accreditation data independently through the same platform.',
+    ],
     tech: ['Go', 'Go-kit', 'PostgreSQL'],
-    image: null,
+    image: akreditasikuImg,
     link: null,
   },
   {
+    slug: 'digital-bootcamp',
     title: 'Digital Bootcamp Platform',
     company: 'PT Padepokan Tujuh Sembilan',
+    experienceId: 'hmj-2021',
     period: '2021 – 2023',
     description:
       'Backend services for training and managing technical talent through a structured bootcamp program.',
+    details: [
+      'Built for PT Padepokan Tujuh Sembilan, this platform supports a structured digital bootcamp — tracking cohorts of trainees through a technical training program from enrollment to graduation.',
+      'I developed the backend services with Go, Go-kit, Docker, and PostgreSQL, containerizing the services so the client could deploy and manage the platform predictably alongside their existing infrastructure.',
+    ],
     tech: ['Go', 'Go-kit', 'Docker', 'PostgreSQL'],
-    image: null,
+    image: digitalBootcampImg,
     link: null,
   },
   {
+    slug: 'oripay-qris',
     title: 'Oripay — QRIS Payment Integration',
     company: 'PT Harmoni Mitra Jayandra',
+    experienceId: 'hmj-2021',
     period: '2021 – 2023',
     description:
       'Integrated DANA QRIS into the Oripay platform, enabling seamless digital transactions for merchants.',
+    details: [
+      'Oripay needed to support QRIS (the Indonesian national QR payment standard) so merchants on the platform could accept digital payments without extra hardware.',
+      'I integrated DANA QRIS into Oripay using Node.js and PostgreSQL, handling the payment flow end-to-end from QR generation through transaction confirmation, so merchants get a seamless digital transaction experience.',
+    ],
     tech: ['Node.js', 'PostgreSQL'],
-    image: null,
+    image: oripayImg,
     link: null,
   },
 ]

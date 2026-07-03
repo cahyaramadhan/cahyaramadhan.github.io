@@ -8,9 +8,9 @@ export default function Contact() {
   return (
     <section id="contact" className="section-container py-24 text-center">
       <div ref={ref} className={visible ? 'animate-fade-in-up' : 'opacity-0'}>
-        <p className="font-mono text-sm text-accent">05. What's next?</p>
-        <h2 className="mt-3 text-3xl font-bold text-slate-100 sm:text-4xl">Get in touch</h2>
-        <p className="mx-auto mt-4 max-w-md text-slate-400">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">Let's talk</p>
+        <h2 className="mt-3 text-3xl font-bold text-stone-100 sm:text-4xl">Get in touch</h2>
+        <p className="mx-auto mt-4 max-w-md text-stone-400">
           I'm currently open to new opportunities. Whether you have a question
           or just want to say hi, my inbox is always open.
         </p>
@@ -31,7 +31,7 @@ export default function Contact() {
               target={href.startsWith('http') ? '_blank' : undefined}
               rel="noopener noreferrer"
               aria-label={label}
-              className="text-slate-500 transition-colors hover:text-accent"
+              className="text-stone-500 transition-colors hover:text-accent"
             >
               <Icon name={icon} className="h-5 w-5" />
             </a>

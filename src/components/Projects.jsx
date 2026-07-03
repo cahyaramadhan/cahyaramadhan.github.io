@@ -9,7 +9,7 @@ export default function Projects() {
   return (
     <section id="projects" className="section-container py-24">
       <div ref={ref} className={visible ? 'animate-fade-in-up' : 'opacity-0'}>
-        <SectionHeading index="03" title="Projects" />
+        <SectionHeading kicker="Selected work" title="Projects" />
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {projects.map((project) => (

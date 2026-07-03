@@ -10,9 +10,9 @@ export default function Skills() {
   return (
     <section id="skills" className="section-container py-24">
       <div ref={ref} className={visible ? 'animate-fade-in-up' : 'opacity-0'}>
-        <SectionHeading index="01" title="Skills" />
+        <SectionHeading kicker="Toolbox" title="Skills" />
 
-        <p className="mb-8 max-w-xl text-slate-400">
+        <p className="mb-8 max-w-xl text-stone-400">
           Most-used tools, front and center — no arbitrary proficiency bars.
         </p>
 
@@ -32,7 +32,7 @@ export default function Skills() {
             {rest.map((s) => (
               <span
                 key={s.name}
-                className="rounded-md border border-white/10 px-3 py-1.5 text-xs text-slate-400 transition-colors hover:border-white/30 hover:text-slate-200"
+                className="rounded-md border border-white/10 px-3 py-1.5 text-xs text-stone-400 transition-colors hover:border-white/30 hover:text-stone-200"
               >
                 {s.name}
               </span>

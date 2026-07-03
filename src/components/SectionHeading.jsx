@@ -1,9 +1,8 @@
-export default function SectionHeading({ index, title }) {
+export default function SectionHeading({ kicker, title }) {
   return (
-    <div className="mb-10 flex items-center gap-3">
-      <span className="font-mono text-accent">{index}.</span>
-      <h2 className="text-2xl font-bold text-slate-100 sm:text-3xl">{title}</h2>
-      <span className="h-px flex-1 bg-white/10" />
+    <div className="mb-10">
+      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">{kicker}</p>
+      <h2 className="mt-2 text-2xl font-bold text-stone-100 sm:text-3xl">{title}</h2>
     </div>
   )
 }
