@@ -190,3 +190,4 @@ backup path only.
   GitHub profile before relying on it.
 - Project banner images are generated sample placeholders, not real
   product screenshots — see "Adding a project image" above.
+
