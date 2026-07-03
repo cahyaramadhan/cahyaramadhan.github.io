@@ -1,0 +1,126 @@
+import { useEffect, useState } from 'react'
+import Icon from './Icon'
+import { profile } from '../data/portfolio'
+
+const sections = [
+  { id: 'home', label: 'Home' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'education', label: 'Education' },
+  { id: 'contact', label: 'Contact' },
+]
+
+export default function Navbar() {
+  const [active, setActive] = useState('home')
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    window.addEventListener('scroll', onScroll)
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const observers = sections.map(({ id }) => {
+      const el = document.getElementById(id)
+      if (!el) return null
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActive(id)
+        },
+        { rootMargin: '-40% 0px -50% 0px', threshold: 0 },
+      )
+      observer.observe(el)
+      return observer
+    })
+    return () => observers.forEach((o) => o?.disconnect())
+  }, [])
+
+  const handleNav = (id) => {
+    setOpen(false)
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  return (
+    <header
+      className={`fixed top-0 z-50 w-full transition-colors duration-300 ${
+        scrolled ? 'bg-slate-950/85 backdrop-blur border-b border-white/5' : 'bg-transparent'
+      }`}
+    >
+      <nav className="section-container flex h-16 items-center justify-between">
+        <button
+          onClick={() => handleNav('home')}
+          className="font-mono text-lg font-semibold text-slate-100 hover:text-accent transition-colors"
+        >
+          CR<span className="text-accent">.</span>
+        </button>
+
+        <ul className="hidden md:flex items-center gap-1">
+          {sections.map(({ id, label }) => (
+            <li key={id}>
+              <button
+                onClick={() => handleNav(id)}
+                className={`px-3 py-2 text-sm rounded-md transition-colors ${
+                  active === id
+                    ? 'text-accent'
+                    : 'text-slate-400 hover:text-slate-100'
+                }`}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href={profile.resumeUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:inline-flex items-center gap-1.5 rounded-md border border-accent/40 px-3.5 py-1.5 text-sm text-accent hover:bg-accent/10 transition-colors"
+        >
+          Resume
+        </a>
+
+        <button
+          className="md:hidden text-slate-200"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="Toggle menu"
+        >
+          <Icon name={open ? 'close' : 'menu'} />
+        </button>
+      </nav>
+
+      {open && (
+        <div className="md:hidden bg-slate-950/95 backdrop-blur border-b border-white/5">
+          <ul className="section-container flex flex-col py-3">
+            {sections.map(({ id, label }) => (
+              <li key={id}>
+                <button
+                  onClick={() => handleNav(id)}
+                  className={`w-full text-left py-2.5 text-sm ${
+                    active === id ? 'text-accent' : 'text-slate-300'
+                  }`}
+                >
+                  {label}
+                </button>
+              </li>
+            ))}
+            <li>
+              <a
+                href={profile.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block py-2.5 text-sm text-accent"
+              >
+                Resume
+              </a>
+            </li>
+          </ul>
+        </div>
+      )}
+    </header>
+  )
+}
